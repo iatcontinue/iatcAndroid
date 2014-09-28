@@ -5,8 +5,8 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="18" />
+        android:minSdkVersion="13"
+        android:targetSdkVersion="19" />
 
     <application
         android:allowBackup="true"
@@ -26,6 +26,12 @@
             android:name="com.iatcontinue.demo.activity.SlideBannerActivity"
              >
         </activity>
+            <activity
+            android:name=".activity.ServiceActivity"
+             >
+        </activity>
+         <service android:name=".service.LocalService" />
+         <service android:name=".service.MessengerService" />
     </application>
 
 </manifest>
