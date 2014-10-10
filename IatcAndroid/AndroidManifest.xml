@@ -8,6 +8,8 @@
         android:minSdkVersion="13"
         android:targetSdkVersion="19" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -22,16 +24,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         <activity
-            android:name="com.iatcontinue.demo.activity.SlideBannerActivity"
-             >
+        <activity android:name="com.iatcontinue.demo.activity.SlideBannerActivity" >
         </activity>
-            <activity
-            android:name=".activity.ServiceActivity"
-             >
+        <activity android:name=".activity.ServiceActivity" >
         </activity>
-         <service android:name=".service.LocalService" />
-         <service android:name=".service.MessengerService" />
+        <activity android:name=".activity.FileManagerActivity" >
+        </activity>
+        <activity android:name=".activity.MeidaActivity"
+            android:screenOrientation="landscape"></activity>
+<activity android:name=".activity.GestureActivity"></activity>
+        <service android:name=".service.LocalService" />
+        <service android:name=".service.MessengerService" />
     </application>
 
 </manifest>
