@@ -26,6 +26,12 @@ public class SlideBanner extends RelativeLayout {
 
 	private int width = 0;// 屏幕宽度
 	private int height = 0;// 屏幕高度
+	
+	private int movedRightContent =-1;
+	private int movedLeftContent =-1;
+	
+	private int movedRightBehind =-1;
+	private int movedLeftBehind =-1;
 
 	private LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
 			LayoutParams.MATCH_PARENT);
@@ -128,43 +134,46 @@ public class SlideBanner extends RelativeLayout {
 	}
 
 	private OnTouchListener onTouchListener = new OnTouchListener() {
-		float down_x = 0;
+		float touchDown = 0;
+		float oldX = 0;
 
 		@Override
 		public boolean onTouch(View paramView, MotionEvent event) {
-			// Log.i(TAG, "ontouch,event action:" + event.getAction());
 
 			switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
-				down_x = event.getX();
+				touchDown = event.getX();
+				movedLeftContent = contentLayout.getLeft();
+				movedRightContent = contentLayout.getRight();
+				
+				movedLeftBehind = behindLayout.getLeft();
+				movedLeftBehind = behindLayout.getRight();
 				break;
 			case MotionEvent.ACTION_MOVE:
 
-				if (event.getX() > down_x) {// 往右移动
+				if(Math.abs(oldX-event.getX())<5){
+					return true;
+				}
+				oldX = event.getX();
+				Log.i(TAG, "move down_x:"+touchDown+",event.getx:"+event.getX());
+				if (event.getX() > touchDown) {// 往右移动
 					moveStatus = MOVE_STATUS.RIGHT;
-				} else if (event.getX() < down_x) {// 往左移动
+				} else if (event.getX() < touchDown) {// 往左移动
 					moveStatus = MOVE_STATUS.LEFT;
 				} else {
 					moveStatus = MOVE_STATUS.STOP;
 				}
 
-				if (!isMove && moveStatus != MOVE_STATUS.STOP) {
-					moveStart(moveStatus);
-				}
-
 				switch (moveStatus) {
 				case LEFT:
-					moveToLeft(event, down_x);
+					moveToLeft(event, touchDown);
 					break;
 				case RIGHT:
-					moveToRight(event, down_x);
+					moveToRight(event, touchDown);
 					break;
 				default:
-
 				}
 				isMove = true;
-				down_x = event.getX();
-
 				break;
 			case MotionEvent.ACTION_UP:
 				moveStatus = MOVE_STATUS.STOP;
@@ -198,7 +207,7 @@ public class SlideBanner extends RelativeLayout {
 
 			LayoutParams cp1 = new LayoutParams(LayoutParams.MATCH_PARENT,
 					LayoutParams.MATCH_PARENT);
-			
+
 			cp1.setMargins(width, 0, 0, 0);
 			contentLayout.setLayoutParams(cp1);
 			break;
@@ -227,20 +236,20 @@ public class SlideBanner extends RelativeLayout {
 	public void moveToLeft(MotionEvent event, float x) {
 		Log.i(TAG, "往左移动");
 
-		// behind 往左移动
+//		// behind 往左移动
 		int temp = (int) Math.abs(event.getX() - x);
-
-		int r = behindLayout.getRight();
-		int l = behindLayout.getLeft();
-		behindLayout.layout(l - temp, behindLayout.getTop(), r - temp,
-				behindLayout.getBottom());
+//
+//		int r = behindLayout.getRight();
+//		int l = behindLayout.getLeft();
+//		behindLayout.layout(l - temp, behindLayout.getTop(), r - temp,
+//				behindLayout.getBottom());
 
 		// content 往左移动
-		int r1 = contentLayout.getRight();
-		Log.d(TAG, "moveToLeft r1:" + r1);
-		int l1 = contentLayout.getLeft();
-		contentLayout.layout(l1 - temp / 2, contentLayout.getTop(), r1 - temp
-				/ 2, contentLayout.getBottom());
+//		int r1 = contentLayout.getRight();
+//		Log.d(TAG, "moveToLeft r1:" + r1);
+//		int l1 = contentLayout.getLeft();
+		contentLayout.layout(movedLeftContent - temp, contentLayout.getTop(), movedRightContent - temp
+				, contentLayout.getBottom());
 
 	}
 
@@ -252,19 +261,19 @@ public class SlideBanner extends RelativeLayout {
 	public void moveToRight(MotionEvent event, float x) {
 		Log.i(TAG, "往右移动");
 
-		// behind 往右移动
+//		// behind 往右移动
 		int temp = (int) Math.abs(event.getX() - x);
-		int r = behindLayout.getRight();
-
-		int l = behindLayout.getLeft();
-		behindLayout.layout(l + temp/2, behindLayout.getTop(), r + temp/2,
-				behindLayout.getBottom());
+//		int r = behindLayout.getRight();
+//
+//		int l = behindLayout.getLeft();
+//		behindLayout.layout(movedLeftBehind + temp, behindLayout.getTop(), movedRightBehind + temp ,
+//				behindLayout.getBottom());
 
 		// content 往右移动
-		int r1 = contentLayout.getRight();
-		Log.d(TAG, "moveToRight r1:" + r1);
-		int l1 = contentLayout.getLeft();
-		contentLayout.layout(l1 + temp, contentLayout.getTop(), r1 + temp,
+//		int r1 = contentLayout.getRight();
+//		Log.d(TAG, "moveToRight r1:" + r1+",temp:"+temp);
+//		int l1 = contentLayout.getLeft();
+		contentLayout.layout( movedLeftContent+ temp, contentLayout.getTop(), movedRightContent + temp,
 				contentLayout.getBottom());
 	}
 

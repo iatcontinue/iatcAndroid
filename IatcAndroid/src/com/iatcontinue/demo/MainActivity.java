@@ -1,5 +1,6 @@
 package com.iatcontinue.demo;
 
+import com.iatcontinue.demo.activity.DatabaseActivity;
 import com.iatcontinue.demo.activity.FileManagerActivity;
 import com.iatcontinue.demo.activity.GestureActivity;
 import com.iatcontinue.demo.activity.MeidaActivity;
@@ -25,6 +26,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	private final int ID_FILE_BTN = 125;
 	private final int ID_MEDIA_BTN = 126;
 	private final int ID_GESTURE_BTN = 127;
+	private final int ID_DB_BTN = 128;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,6 +65,12 @@ public class MainActivity extends Activity implements OnClickListener{
 		guestureBtn.setOnClickListener(this);
 		guestureBtn.setText("guestureBtn");
 		buttons_layout.addView(guestureBtn);
+		
+		Button dbBtn = new Button(this);
+		dbBtn.setId(ID_DB_BTN);
+		dbBtn.setOnClickListener(this);
+		dbBtn.setText("dbBtn");
+		buttons_layout.addView(dbBtn);
 	}
 	
 	@Override
@@ -83,6 +91,9 @@ public class MainActivity extends Activity implements OnClickListener{
 			break;
 		case ID_GESTURE_BTN:
 			intent.setClass(MainActivity.this, GestureActivity.class);
+			break;
+		case ID_DB_BTN:
+			intent.setClass(MainActivity.this, DatabaseActivity.class);
 			break;
 		default:
 			intent.setClass(MainActivity.this, MainActivity.class);

@@ -30,6 +30,9 @@
         </activity>
         <activity android:name=".activity.FileManagerActivity" >
         </activity>
+        
+          <activity android:name=".activity.DatabaseActivity" >
+        </activity>
         <activity android:name=".activity.MeidaActivity"
             android:screenOrientation="landscape"></activity>
 <activity android:name=".activity.GestureActivity"></activity>
